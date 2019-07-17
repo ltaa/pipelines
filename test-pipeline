@@ -1,0 +1,38 @@
+pipeline {
+        agent {label 'worker' }
+
+    options { buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '20'))
+        timestamps()
+    }
+
+    stages {
+      stage("set config for github hook") {
+        steps {
+          script {
+            properties([pipelineTriggers([githubPush()])])
+          }
+        }
+      }
+      stage("checkout capp-faq-uk") {
+        steps {
+          // checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'capp-faq-templates']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '08d46abd-a890-4ccb-95ea-de76c852dae2', url: 'git@github.com:LibertyGlobal/capp-faq-templates.git']]])
+          // checkout changelog: false, poll: true, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '325dbabc-f673-4ec6-b892-03a5de528f44', url: 'git@github.com:ltaa/hooktest.git']]]
+          // checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '08d46abd-a890-4ccb-95ea-de76c852dae2', refspec: '+refs/heads/master:refs/remotes/origin/master', url: 'git@github.com:ltaa/hooktest.git']]])
+          checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '08d46abd-a890-4ccb-95ea-de76c852dae2', refspec: '+refs/heads/master:refs/remotes/origin/master', url: 'git@github.com:ltaa/hooktest.git']]])
+
+        }
+      }
+      // stage("checkout capp-faq-uk") {
+      //   steps {
+      //     checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'capp-faq-uk']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '08d46abd-a890-4ccb-95ea-de76c852dae2', url: 'git@github.com:LibertyGlobal/capp-faq-uk.git']]])
+      //   }
+      // }
+
+
+    }
+    post {
+      always {
+        cleanWs()
+      }
+    }
+}
