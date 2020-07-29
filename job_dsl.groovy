@@ -1,4 +1,3 @@
-
 String basePath = 'example1'
 String repo = 'sheehan/gradle-example'
 
@@ -24,5 +23,15 @@ job("$basePath/gradle-example-deploy") {
     }
     steps {
         shell 'scp war file; restart...'
+    }
+}
+
+
+job('example/fileInput') {
+    parameters {
+        fileParam(String fileLocation, String description = null)
+    }
+    steps {
+        shell('ls -la')
     }
 }
