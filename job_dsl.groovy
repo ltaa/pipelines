@@ -27,7 +27,7 @@ job("$basePath/gradle-example-deploy") {
 }
 
 
-job('example/fileInput') {
+job("$basePath/fileInput") {
     parameters {
         fileParam("foo.txt")
     }
