@@ -33,5 +33,6 @@ job("$basePath/fileInput") {
     }
     steps {
         shell('ls -la')
+	shell('cat foo.txt')
     }
 }
