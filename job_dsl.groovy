@@ -29,7 +29,7 @@ job("$basePath/gradle-example-deploy") {
 
 job('example/fileInput') {
     parameters {
-        fileParam(String fileLocation, String description = null)
+        fileParam("foo.txt")
     }
     steps {
         shell('ls -la')
